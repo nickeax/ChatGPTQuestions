@@ -1,6 +1,6 @@
 ﻿public class Log
 {
-    public static void PrintCollectionInColumns(IEnumerable<object> collection, int columnWidth = 20, ConsoleColor propertyColor = ConsoleColor.Cyan, ConsoleColor valueColor = ConsoleColor.White)
+    public static void PrintCollectionInColumns<T>(IEnumerable<T> collection, int columnWidth = 20, ConsoleColor propertyColor = ConsoleColor.Cyan, ConsoleColor valueColor = ConsoleColor.White)
     {
         foreach (var obj in collection)
         {
@@ -8,7 +8,7 @@
         }
     }
 
-    private static void PrintObjectPropertiesInColumns(object obj, int columnWidth, ConsoleColor propertyColor, ConsoleColor valueColor)
+    private static void PrintObjectPropertiesInColumns<T>(T obj, int columnWidth, ConsoleColor propertyColor, ConsoleColor valueColor)
     {
         var properties = obj.GetType().GetProperties();
 
