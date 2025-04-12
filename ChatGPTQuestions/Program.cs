@@ -6,6 +6,8 @@ Question: Write a method that takes a list of integers and a delegate to filter 
 var testData = Utils.Mocking.GenerateRandomInts(50).ToList();
 var res = FilterByDelegate(testData, a => a % 2 == 0);
 
+res.ForEach(Console.WriteLine);
+
 static List<int> FilterByDelegate(List<int> input, Func<int, bool> filter)
 {
     return [.. input.Where(filter)];
