@@ -1,107 +1,33 @@
-﻿namespace Utils;
-public class Log
+﻿public class Log
 {
-    // Print collection if passed in
-    public static void PrintCollection<T>(IEnumerable<T> collection)
+    public static void PrintCollectionInColumns(IEnumerable<object> collection, int columnWidth = 20, ConsoleColor propertyColor = ConsoleColor.Cyan, ConsoleColor valueColor = ConsoleColor.White)
     {
-        foreach (var item in collection)
+        foreach (var obj in collection)
         {
-            Console.WriteLine(item);
+            PrintObjectPropertiesInColumns(obj, columnWidth, propertyColor, valueColor);
         }
     }
-    /// Print collection if passed in
-    public static void PrintCollection<T>(IEnumerable<T> collection, string message)
-    {
-        Console.WriteLine(message);
-        foreach (var item in collection)
-        {
-            Console.WriteLine(item);
-        }
-    }
-    // Print message
-    public static void Print(string message)
-    {
-        Console.WriteLine(message);
-    }
-    // Print message with color
-    public static void Print(string message, ConsoleColor color)
-    {
-        Console.ForegroundColor = color;
-        Console.WriteLine(message);
-        Console.ResetColor();
-    }
-    // Print message with color and background color
-    public static void Print(string message, ConsoleColor color, ConsoleColor backgroundColor)
-    {
-        Console.ForegroundColor = color;
-        Console.BackgroundColor = backgroundColor;
-        Console.WriteLine(message);
-        Console.ResetColor();
-    }
-    // Print message with color and background color
-    public static void Print(string message, ConsoleColor color, ConsoleColor backgroundColor, bool bold)
-    {
-        if (bold)
-        {
-            Console.WriteLine("\u001b[1m" + message + "\u001b[0m");
-        }
-        else
-        {
-            Console.WriteLine(message);
-        }
-        Console.ForegroundColor = color;
-        Console.BackgroundColor = backgroundColor;
-        Console.ResetColor();
-    }
-    // Print message with color and background color
-    public static void Print(string message, ConsoleColor color, ConsoleColor backgroundColor, bool bold, bool underline)
-    {
-        if (bold)
-        {
-            Console.WriteLine("\u001b[1m" + message + "\u001b[0m");
-        }
-        else
-        {
-            Console.WriteLine(message);
-        }
-        if (underline)
-        {
-            Console.WriteLine("\u001b[4m" + message + "\u001b[0m");
-        }
-        Console.ForegroundColor = color;
-        Console.BackgroundColor = backgroundColor;
-        Console.ResetColor();
-    }
-    // Use reflection to print all user defined properties of an object
-    public static void PrintProperties(object obj)
+
+    private static void PrintObjectPropertiesInColumns(object obj, int columnWidth, ConsoleColor propertyColor, ConsoleColor valueColor)
     {
         var properties = obj.GetType().GetProperties();
+
+        // Print the properties and their values in columns with colorization
         foreach (var property in properties)
         {
             var value = property.GetValue(obj);
-            Console.WriteLine($"{property.Name}: {value}");
+
+            // Set color for property name
+            Console.ForegroundColor = propertyColor;
+            Console.Write("{0,-" + columnWidth + "}: ", property.Name);
+
+            // Set color for property value
+            Console.ForegroundColor = valueColor;
+            Console.WriteLine(value);
+
+            // Reset to default color after printing the value
+            Console.ResetColor();
         }
-    }
-    // Use reflection to print all user defined properties of an object
-    public static void PrintProperties(object obj, string message)
-    {
-        Console.WriteLine(message);
-        var properties = obj.GetType().GetProperties();
-        foreach (var property in properties)
-        { 
-            var value = property.GetValue(obj);
-            Console.WriteLine($"{property.Name}: {value}");
-        }
-    }
-    // Use reflection to print all user defined properties of an object in formatted columns
-    // 
-    public static void PrintPropertiesInColumns(object obj, int columnWidth)
-    {
-        var properties = obj.GetType().GetProperties();
-        foreach (var property in properties)
-        {
-            var value = property.GetValue(obj);
-            Console.WriteLine($"{property.Name,{columnWidth}}: {value}");
-        }
+        Console.WriteLine(); // Add an empty line between objects
     }
 }
