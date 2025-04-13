@@ -44,6 +44,13 @@ public class Mocking
 
         return ret;
     }
+    public static List<string> RandomWords(int cnt, int mockNetworkDelay)
+    {
+        Thread.Sleep(mockNetworkDelay);
+
+        return RandomWords(cnt);
+    }
+
     public static List<string> CreatePairs(int cnt)
     {
         var ret = new List<string>();
