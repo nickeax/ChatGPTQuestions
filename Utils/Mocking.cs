@@ -7,6 +7,18 @@ public class Mocking
         for (int i = 0; i < cnt; i++)
             yield return rnd.Next(100);
     }
+    public static [int,int] GenerateRandomMultiDimensionalArray(int rows, int cols)
+    {
+        var ret = new int[rows, cols];
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                ret[i, j] = rnd.Next(100);
+            }
+        }
+        return ret;
+    }
     public static List<List<int>> BuildListOfList(int rows, int maxElements)
     {
         var ret = new List<List<int>>();
